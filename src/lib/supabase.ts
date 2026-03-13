@@ -28,7 +28,18 @@ export interface Torneio {
   data: string;
   local: string;
   premio?: string;
+  campeao_id?: string;
   created_at: string;
+  campeao?: Pick<MC, 'id' | 'nome' | 'foto'>;
+}
+
+export interface TorneioParticipante {
+  id: string;
+  torneio_id: string;
+  mc_id: string;
+  seed?: number;
+  created_at: string;
+  mc?: MC;
 }
 
 export interface Batalha {
@@ -38,6 +49,12 @@ export interface Batalha {
   vencedor_id?: string;
   data: string;
   torneio_id?: string;
+  fase?: string;
+  ordem_na_fase?: number;
+  placar_mc1?: number;
+  placar_mc2?: number;
+  proxima_batalha_id?: string;
+  proxima_slot?: number;
   created_at: string;
   mc1?: MC;
   mc2?: MC;

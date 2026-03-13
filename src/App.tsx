@@ -7,6 +7,7 @@ import MCsList from './pages/MCsList';
 import MCProfile from './pages/MCProfile';
 import Ranking from './pages/Ranking';
 import Tournaments from './pages/Tournaments';
+import TournamentDetails from './pages/TournamentDetails';
 import Events from './pages/Events';
 import Gallery from './pages/Gallery';
 import Login from './pages/Login';
@@ -26,6 +27,7 @@ function App() {
           <Route path="/mcs/:id" element={<MCProfile />} />
           <Route path="/ranking" element={<Ranking />} />
           <Route path="/torneios" element={<Tournaments />} />
+          <Route path="/torneios/:id" element={<TournamentDetails />} />
           <Route path="/eventos" element={<Events />} />
           <Route path="/galeria" element={<Gallery />} />
           <Route path="/login" element={<Login />} />
