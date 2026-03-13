@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { supabase, Torneio } from '../lib/supabase';
-import { Calendar, MapPin, Award } from 'lucide-react';
+import { Calendar, MapPin, Award, ChevronRight } from 'lucide-react';
 import Layout from '../components/Layout';
 
 export default function Tournaments() {
@@ -11,7 +12,7 @@ export default function Tournaments() {
     async function fetchTorneios() {
       const { data } = await supabase
         .from('torneios')
-        .select('*')
+        .select('*, campeao:campeao_id(id, nome, foto)')
         .order('data', { ascending: false });
 
       if (data) setTorneios(data);
@@ -46,7 +47,8 @@ export default function Tournaments() {
             const isPast = new Date(torneio.data) < new Date();
 
             return (
-              <div
+              <Link
+                to={`/torneios/${torneio.id}`}
                 key={torneio.id}
                 className="bg-zinc-900 border-2 border-zinc-800 rounded-lg overflow-hidden hover:border-red-600 transition-all"
               >
@@ -81,17 +83,28 @@ export default function Tournaments() {
                         </div>
                       </div>
                     )}
+
+                    {torneio.campeao && (
+                      <div className="rounded-lg border border-yellow-600/40 bg-yellow-600/10 px-3 py-2 text-yellow-300 text-sm font-bold">
+                        Campeão: {torneio.campeao.nome}
+                      </div>
+                    )}
                   </div>
 
-                  {isPast && (
-                    <div className="mt-4 pt-4 border-t border-zinc-800">
+                  <div className="mt-4 pt-4 border-t border-zinc-800 flex items-center justify-between text-sm">
+                    {isPast ? (
                       <span className="inline-block bg-zinc-800 text-gray-400 px-3 py-1 rounded-full text-xs font-bold">
                         CONCLUÍDO
                       </span>
-                    </div>
-                  )}
+                    ) : (
+                      <span className="text-gray-400 font-bold">Em andamento</span>
+                    )}
+                    <span className="text-red-500 font-bold inline-flex items-center gap-1">
+                      Ver chaveamento <ChevronRight className="w-4 h-4" />
+                    </span>
+                  </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
